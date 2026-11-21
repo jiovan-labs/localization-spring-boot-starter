@@ -1,3 +1,5 @@
+[English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md)
+
 # Localization Spring Boot Starter
 
 Spring Boot application enables an ability of switching multilingualism.
