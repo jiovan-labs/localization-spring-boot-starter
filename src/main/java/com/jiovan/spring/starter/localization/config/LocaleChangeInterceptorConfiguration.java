@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2016 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.localechange.config;
+package com.jiovan.spring.starter.localization.config;
 
 
 import java.util.Optional;
@@ -31,15 +31,15 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import cn.unikue.commonplexus.javaseutil.constant.AssertMessageConst;
-import cn.unikue.commonplexus.javaseutil.util.CollectionPlainWraps;
-import cn.unikue.commonplexus.javaseutil.util.StringUtilsWraps;
-import cn.unikue.springstarter.localechange.property.LocaleChangeProperties;
+import com.jiovan.plexus.common.toolkit.constant.AssertMessageConst;
+import com.jiovan.plexus.common.toolkit.util.CollectionPlainWraps;
+import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
+import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
 import lombok.RequiredArgsConstructor;
 
 
 /**
- * Configuration of {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} for locale change
+ * Configuration of {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} for localization
  *
  * @author David Hsing
  */
@@ -52,17 +52,20 @@ public class LocaleChangeInterceptorConfiguration implements WebMvcConfigurer {
     private final LocaleChangeProperties properties;
 
     /**
+     * Returns a {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} configured from the locale interceptor properties
+     *
+     * @return the configured locale change interceptor
+     *
      * Usage:
      * <pre><code>
      *     &lt;a href="?lang=en-US"&gt;English&lt;/a&gt;
      *     &lt;a href="?lang=en_US"&gt;English&lt;/a&gt;
      * </code></pre>
      *
-     * @reference "http://guanxi.iteye.com/blog/2304607"
+     * @see "http://guanxi.iteye.com/blog/2304607"
      */
     @Bean
     @ConditionalOnMissingBean
-    @SuppressWarnings({"JavadocDeclaration", "JavadocLinkAsPlainText"})
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         LocaleChangeProperties.LocaleInterceptor props = properties.getLocaleInterceptor();

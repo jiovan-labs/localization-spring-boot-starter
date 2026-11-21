@@ -1,14 +1,14 @@
 /*
- * Copyright (c) 2022 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2022 Jiovan Ltd. All rights reserved.
  *
- * Unikue Confidential
+ * Jiovan Confidential
  *
  * The source code for this program is not published or otherwise
  * divested of its trade secrets, irrespective of what has been
  * deposited with the National Copyright Administration of China.
  */
 
-package cn.unikue.springstarter.localechange.interceptor;
+package com.jiovan.spring.starter.localization.interceptor;
 
 
 import java.util.LinkedHashMap;
@@ -25,16 +25,16 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import cn.unikue.commonplexus.javaseutil.util.MapPlainWraps;
-import cn.unikue.commonplexus.springutil.util.MessageSourceWraps;
-import cn.unikue.commonplexus.springutil.util.WebUtilsWraps;
-import cn.unikue.springstarter.localechange.property.LocaleChangeProperties;
+import com.jiovan.plexus.common.toolkit.util.MapPlainWraps;
+import com.jiovan.plexus.spring.toolkit.util.MessageSourceWraps;
+import com.jiovan.plexus.spring.toolkit.util.WebUtilsWraps;
+import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 
 /**
- * {@link org.springframework.web.servlet.HandlerInterceptor} for locale change
+ * {@link org.springframework.web.servlet.HandlerInterceptor} for localization
  *
  * @author David Hsing
  */

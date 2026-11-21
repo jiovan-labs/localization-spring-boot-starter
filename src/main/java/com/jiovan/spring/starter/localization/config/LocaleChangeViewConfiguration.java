@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2022 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.localechange.config;
+package com.jiovan.spring.starter.localization.config;
 
 
 import java.util.Optional;
@@ -29,15 +29,15 @@ import org.springframework.util.Assert;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import cn.unikue.commonplexus.javaseutil.constant.AssertMessageConst;
-import cn.unikue.commonplexus.javaseutil.util.CollectionPlainWraps;
-import cn.unikue.springstarter.localechange.interceptor.LocaleChangeViewInterceptor;
-import cn.unikue.springstarter.localechange.property.LocaleChangeProperties;
+import com.jiovan.plexus.common.toolkit.constant.AssertMessageConst;
+import com.jiovan.plexus.common.toolkit.util.CollectionPlainWraps;
+import com.jiovan.spring.starter.localization.interceptor.LocaleChangeViewInterceptor;
+import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
 import lombok.RequiredArgsConstructor;
 
 
 /**
- * Configuration of view interceptor for locale change
+ * Configuration of view interceptor for localization
  *
  * @author David Hsing
  */
@@ -47,10 +47,15 @@ import lombok.RequiredArgsConstructor;
 @EnableConfigurationProperties(value = LocaleChangeProperties.class)
 @RequiredArgsConstructor
 public class LocaleChangeViewConfiguration implements WebMvcConfigurer {
-    public static final String PROPERTIES_PREFIX = "spring.locale-change";    // $NON-NLS-1$
+    public static final String PROPERTIES_PREFIX = "jiovan.localization";    // $NON-NLS-1$
     public static final String VIEW_INTERCEPTOR = "localeChangeViewInterceptor";    // $NON-NLS-1$
     private final LocaleChangeProperties properties;
 
+    /**
+     * Returns the {@link com.jiovan.spring.starter.localization.interceptor.LocaleChangeViewInterceptor} that applies the locale to the view
+     *
+     * @return a new {@link com.jiovan.spring.starter.localization.interceptor.LocaleChangeViewInterceptor} configured with the localization properties
+     */
     @Bean(name = VIEW_INTERCEPTOR)
     @ConditionalOnMissingBean
     public LocaleChangeViewInterceptor viewInterceptor() {

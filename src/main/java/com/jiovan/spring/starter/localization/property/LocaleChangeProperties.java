@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2022 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.localechange.property;
+package com.jiovan.spring.starter.localization.property;
 
 
 import java.io.Serializable;
@@ -27,27 +27,27 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import cn.unikue.commonplexus.javaseutil.constant.StringVariantConst;
-import cn.unikue.commonplexus.springutil.constant.AntPathConst;
-import cn.unikue.commonplexus.springutil.constant.SpringAttributeConst;
-import cn.unikue.springstarter.localechange.config.LocaleChangeViewConfiguration;
-import cn.unikue.springstarter.localechange.enumeration.LocaleResolverType;
+import com.jiovan.plexus.common.toolkit.constant.StringVariantConst;
+import com.jiovan.plexus.spring.toolkit.constant.AntPathConst;
+import com.jiovan.plexus.spring.toolkit.constant.SpringAttributeConst;
+import com.jiovan.spring.starter.localization.config.LocaleChangeViewConfiguration;
+import com.jiovan.spring.starter.localization.enumeration.LocaleResolverType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 
 /**
- * Properties for locale change
+ * Properties for localization
  *
  * @author David Hsing
- * @reference "https://www.techonthenet.com/js/language_tags.php"
+ *
+ * @see "https://www.techonthenet.com/js/language_tags.php"
  */
 @ConfigurationProperties(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX)
 @Getter
 @Setter
 @ToString
-@SuppressWarnings({"JavadocDeclaration", "JavadocLinkAsPlainText"})
 public class LocaleChangeProperties implements Serializable {
     /**
      * Indicates whether to enable this starter or not
@@ -98,8 +98,9 @@ public class LocaleChangeProperties implements Serializable {
      * Properties for model and view
      *
      * @author David Hsing
+     *
      * @see org.springframework.web.servlet.ModelAndView
-     * @see cn.unikue.springstarter.localechange.interceptor.LocaleChangeViewInterceptor
+     * @see com.jiovan.spring.starter.localization.interceptor.LocaleChangeViewInterceptor
      */
     @Getter
     @Setter
@@ -145,9 +146,10 @@ public class LocaleChangeProperties implements Serializable {
 
 
     /**
-     * Properties for locale change interceptor
+     * Properties for localization interceptor
      *
      * @author David Hsing
+     *
      * @see org.springframework.web.servlet.i18n.LocaleChangeInterceptor
      */
     @Getter
@@ -187,7 +189,8 @@ public class LocaleChangeProperties implements Serializable {
      * Properties for cookie locale filter
      *
      * @author David Hsing
-     * @see cn.unikue.springstarter.localechange.filter.CookieLocaleRequestContextFilter
+     *
+     * @see com.jiovan.spring.starter.localization.filter.CookieLocaleRequestContextFilter
      */
     @Getter
     @Setter

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2022 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.localechange.factory;
+package com.jiovan.spring.starter.localization.factory;
 
 
 import java.util.Collections;
 import java.util.Set;
 import jakarta.annotation.Nullable;
-import org.apache.commons.lang3.StringUtils;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.expression.IExpressionObjectFactory;
-import cn.unikue.springstarter.localechange.support.LocaleChangeTagObserver;
+import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
+import com.jiovan.spring.starter.localization.support.LocaleChangeTagObserver;
 
 
 /**
- * {@link org.thymeleaf.expression.IExpressionObjectFactory} for locale change
+ * {@link org.thymeleaf.expression.IExpressionObjectFactory} for localization
  *
  * @author David Hsing
  */
@@ -36,7 +36,7 @@ public record LocaleChangeExpressionFactory(LocaleChangeTagObserver observer) im
 
     @Override
     public Object buildObject(@Nullable IExpressionContext context, @Nullable String expression) {
-        return StringUtils.equals(expression, EXPRESSION_NAME) ? observer : null;
+        return StringUtilsWraps.equals(expression, EXPRESSION_NAME) ? observer : null;
     }
 
     @Override
@@ -46,6 +46,6 @@ public record LocaleChangeExpressionFactory(LocaleChangeTagObserver observer) im
 
     @Override
     public boolean isCacheable(@Nullable String expression) {
-        return StringUtils.equals(expression, EXPRESSION_NAME);
+        return StringUtilsWraps.equals(expression, EXPRESSION_NAME);
     }
 }

@@ -1,4 +1,4 @@
-# Locale Change Spring Boot Starter
+# Localization Spring Boot Starter
 
 Spring Boot application enables an ability of switching multilingualism.
 
@@ -8,19 +8,19 @@ Spring Boot application enables an ability of switching multilingualism.
 
 ```xml
     <dependency>
-        <groupId>cn.unikue.springstarter</groupId>
-        <artifactId>locale-change-spring-boot-starter</artifactId>
+        <groupId>com.jiovan.spring.starter</groupId>
+        <artifactId>localization-spring-boot-starter</artifactId>
         <version>LATEST</version>
     </dependency>
 ```
 
-> By default, this starter will auto take effect, you can turn it off by `spring.locale-change.enabled = false`
+> By default, this starter will auto take effect, you can turn it off by `jiovan.localization.enabled = false`
 
-- Configure Spring Boot `application.yml` with prefix `spring.locale-change`
+- Configure Spring Boot `application.yml` with prefix `jiovan.localization`
 
 ```yml
-spring:
-    locale-change:
+jiovan:
+    localization:
         model-and-view:
             view-attribute: 'localeChangeTagNames'
             tag-multilingual: false
@@ -41,8 +41,8 @@ spring:
 
 - **Optional feature**: If you want to display the `tag-names` value in multilingual (not the fixed value in `application.properties`), for example, display the value of `zh-CN` to `简体中文` when current request is using `zh` locale, or display `Simplified Chinese` when the request is using `en` locale. You can reach your goal as following:
   1. Configure the `tag-multilingual` attribute to `true`
-  2. Set the value of `zh-CN` to `locale-change.dropdown-switch`
-  3. Write the `locale-change.dropdown-switch` as a key in a resource bundle properties that could be loaded by the primary `MessageSource` bean (Just as our another Spring starter `message-source-spring-boot-starter` does)
+  2. Set the value of `zh-CN` to `localization.dropdown-switch`
+  3. Write the `localization.dropdown-switch` as a key in a resource bundle properties that could be loaded by the primary `MessageSource` bean (Just as our another Spring starter `message-source-spring-boot-starter` does)
 
 - Write your template code as following (take `Thymeleaf` as an example)
 
@@ -72,7 +72,7 @@ Under the `body` segment:
 
 ## Document
 
-- Github: https://github.com/unikueltd/locale-change-spring-boot-starter
+- Github: https://github.com/jiovan-labs/localization-spring-boot-starter
 
 ## Requirement
 
@@ -86,12 +86,12 @@ See the `NOTICE.txt` file for required notices and attributions.
 
 ## Donation
 
-You like this package? Then [donate to us](https://unikue.cn/donation) to support the development.
+You like this package? Then [donate to us](https://jiovan.com/donation) to support the development.
 
 ## Copyright
 
-Beijing Unikue Network Technology Ltd.
+Beijing Jiovan Technology Ltd.
 
 ## Website
 
-- Unikue: https://unikue.cn
+- Jiovan: https://jiovan.com

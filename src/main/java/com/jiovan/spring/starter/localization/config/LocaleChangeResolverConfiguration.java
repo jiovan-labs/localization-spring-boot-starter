@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2016 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.localechange.config;
+package com.jiovan.spring.starter.localization.config;
 
 
 import java.util.Optional;
@@ -27,8 +27,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProp
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.boot.webmvc.autoconfigure.DispatcherServletAutoConfiguration;
+import org.springframework.boot.webmvc.autoconfigure.WebMvcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -41,17 +41,17 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import cn.unikue.commonplexus.javaseutil.util.CollectionPlainWraps;
-import cn.unikue.commonplexus.javaseutil.util.MapPlainWraps;
-import cn.unikue.commonplexus.javaseutil.util.StringUtilsWraps;
-import cn.unikue.commonplexus.springutil.constant.SpringBeanConst;
-import cn.unikue.springstarter.localechange.filter.CookieLocaleRequestContextFilter;
-import cn.unikue.springstarter.localechange.property.LocaleChangeProperties;
-import cn.unikue.springstarter.localechange.resolver.CookieLocaleContextResolver;
+import com.jiovan.plexus.common.toolkit.util.CollectionPlainWraps;
+import com.jiovan.plexus.common.toolkit.util.MapPlainWraps;
+import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
+import com.jiovan.plexus.spring.toolkit.constant.SpringBeanConst;
+import com.jiovan.spring.starter.localization.filter.CookieLocaleRequestContextFilter;
+import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
+import com.jiovan.spring.starter.localization.resolver.CookieLocaleContextResolver;
 
 
 /**
- * Configuration of {@link org.springframework.web.servlet.LocaleContextResolver} for locale change
+ * Configuration of {@link org.springframework.web.servlet.LocaleContextResolver} for localization
  *
  * @author David Hsing
  */
@@ -73,10 +73,17 @@ public class LocaleChangeResolverConfiguration {
     @ConditionalOnProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "cookie", matchIfMissing = true)
     static class Cookie {
         /**
-         * @see org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#requestContextFilter
+         * Returns a {@link org.springframework.boot.web.servlet.FilterRegistrationBean} that registers a cookie-aware request context filter
+         *
+         * @param properties the locale change properties providing filter order, URL patterns and init parameters
+         *
+         * @return the configured request context filter registration
+         *
+         * @see org.springframework.boot.webmvc.autoconfigure.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#requestContextFilter()
          */
         @Bean
         @ConditionalOnMissingBean(name = SpringBeanConst.REQUEST_CONTEXT_FILTER)
+        @SuppressWarnings("JavadocReference")
         public FilterRegistrationBean<RequestContextFilter> requestContextFilterRegistration(@Nonnull LocaleChangeProperties properties) {
             CookieLocaleRequestContextFilter filter = new CookieLocaleRequestContextFilter(properties);
             LocaleChangeProperties.CookieLocaleFilter filterProps = properties.getCookieLocaleFilter();
@@ -92,6 +99,12 @@ public class LocaleChangeResolverConfiguration {
         }
 
         /**
+         * Returns a cookie-based {@link org.springframework.web.servlet.LocaleContextResolver} configured from the given properties
+         *
+         * @param properties the locale change properties providing cookie name, path, domain and default locale settings
+         *
+         * @return the configured cookie locale resolver
+         *
          * @see org.springframework.web.servlet.i18n.CookieLocaleResolver
          */
         @Bean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
@@ -118,6 +131,12 @@ public class LocaleChangeResolverConfiguration {
     @ConditionalOnProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "session")
     static class Session {
         /**
+         * Returns a session-based {@link org.springframework.web.servlet.LocaleContextResolver} configured from the given properties
+         *
+         * @param properties the locale change properties providing session attribute names and default locale settings
+         *
+         * @return the configured session locale resolver
+         *
          * @see org.springframework.web.servlet.i18n.SessionLocaleResolver
          */
         @Bean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
@@ -138,6 +157,12 @@ public class LocaleChangeResolverConfiguration {
     @ConditionalOnProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "fixed")
     static class Fixed {
         /**
+         * Returns a fixed {@link org.springframework.web.servlet.LocaleContextResolver} configured from the given properties
+         *
+         * @param properties the locale change properties providing the default locale and time zone
+         *
+         * @return the configured fixed locale resolver
+         *
          * @see org.springframework.web.servlet.i18n.FixedLocaleResolver
          */
         @Bean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)

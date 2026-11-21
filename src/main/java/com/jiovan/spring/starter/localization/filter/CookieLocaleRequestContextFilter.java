@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2022 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.localechange.filter;
+package com.jiovan.spring.starter.localization.filter;
 
 
 import java.io.IOException;
@@ -26,15 +26,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
+import org.springframework.boot.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import cn.unikue.commonplexus.springutil.util.AntPathWraps;
-import cn.unikue.commonplexus.springutil.util.UriUtilsWraps;
-import cn.unikue.commonplexus.springutil.util.WebUtilsWraps;
-import cn.unikue.springstarter.localechange.property.LocaleChangeProperties;
+import com.jiovan.plexus.spring.toolkit.util.AntPathWraps;
+import com.jiovan.plexus.spring.toolkit.util.UriUtilsWraps;
+import com.jiovan.plexus.spring.toolkit.util.WebUtilsWraps;
+import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -44,10 +44,11 @@ import lombok.Setter;
  * {@link jakarta.servlet.Filter} for detecting locale from cookies, and setting up request context
  *
  * @author David Hsing
+ *
  * @see org.springframework.web.filter.RequestContextFilter
  * @see org.springframework.web.filter.OncePerRequestFilter
- * @see org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration
- * @see org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter
+ * @see org.springframework.boot.webmvc.autoconfigure.WebMvcAutoConfiguration
+ * @see org.springframework.boot.servlet.filter.OrderedRequestContextFilter
  */
 @RequiredArgsConstructor
 @Getter
@@ -64,7 +65,7 @@ public class CookieLocaleRequestContextFilter extends OrderedRequestContextFilte
             chain.doFilter(request, response);
             return;
         }
-        Locale locale = ObjectUtils.defaultIfNull(WebUtilsWraps.getLocaleFromCookie(request, cookieName), request.getLocale());
+        Locale locale = ObjectUtils.getIfNull(WebUtilsWraps.getLocaleFromCookie(request, cookieName), request.getLocale());
         LocaleContextHolder.setLocale(locale, threadLocaleInheritable);
         ServletRequestAttributes attributes = new ServletRequestAttributes(request, response);
         RequestContextHolder.setRequestAttributes(attributes, threadLocaleInheritable);

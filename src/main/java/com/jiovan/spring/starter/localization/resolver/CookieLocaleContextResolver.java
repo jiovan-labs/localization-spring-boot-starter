@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2022 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.localechange.resolver;
+package com.jiovan.spring.starter.localization.resolver;
 
 
 import java.util.Locale;
@@ -25,8 +25,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.i18n.LocaleContext;
 import org.springframework.context.i18n.SimpleLocaleContext;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
-import cn.unikue.commonplexus.javaseutil.constant.StringVariantConst;
-import cn.unikue.commonplexus.springutil.util.WebUtilsWraps;
+import com.jiovan.plexus.common.toolkit.constant.StringVariantConst;
+import com.jiovan.plexus.spring.toolkit.util.WebUtilsWraps;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,6 +35,7 @@ import lombok.Setter;
  * {@link org.springframework.web.servlet.LocaleContextResolver} for detecting locale from request parameters and cookies
  *
  * @author David Hsing
+ *
  * @see org.springframework.web.servlet.i18n.LocaleChangeInterceptor
  * @see "https://blog.csdn.net/flowingflying/article/details/76758577"
  */

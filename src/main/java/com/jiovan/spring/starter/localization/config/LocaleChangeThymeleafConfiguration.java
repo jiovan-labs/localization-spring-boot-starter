@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2022 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.localechange.config;
+package com.jiovan.spring.starter.localization.config;
 
 
 import jakarta.annotation.Nonnull;
@@ -23,21 +23,21 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
+import org.springframework.boot.thymeleaf.autoconfigure.ThymeleafAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.Thymeleaf;
-import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAllBooleanProperties;
-import cn.unikue.springstarter.localechange.dialect.LocaleChangeThymeleafDialect;
-import cn.unikue.springstarter.localechange.factory.LocaleChangeExpressionFactory;
-import cn.unikue.springstarter.localechange.property.LocaleChangeProperties;
-import cn.unikue.springstarter.localechange.support.LocaleChangeTagObserver;
+import com.jiovan.plexus.spring.condition.annotation.ConditionalOnAllBooleanProperties;
+import com.jiovan.spring.starter.localization.dialect.LocaleChangeThymeleafDialect;
+import com.jiovan.spring.starter.localization.factory.LocaleChangeExpressionFactory;
+import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
+import com.jiovan.spring.starter.localization.support.LocaleChangeTagObserver;
 import lombok.RequiredArgsConstructor;
 
 
 /**
- * Configuration of {@link org.thymeleaf.dialect.IDialect} for locale change
+ * Configuration of {@link org.thymeleaf.dialect.IDialect} for localization
  *
  * @author David Hsing
  */

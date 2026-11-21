@@ -1,8 +1,8 @@
-# Locale Change for Spring Boot Starter
-# Copyright (c) 2022 Unikue Ltd. All rights reserved.
-# https://unikue.cn
+# Localization for Spring Boot Starter
+# Copyright (c) 2022 Jiovan Ltd. All rights reserved.
+# https://jiovan.com
 
-cn.unikue.springstarter.localechange.config.LocaleChangeResolverConfiguration
-cn.unikue.springstarter.localechange.config.LocaleChangeInterceptorConfiguration
-cn.unikue.springstarter.localechange.config.LocaleChangeThymeleafConfiguration
-cn.unikue.springstarter.localechange.config.LocaleChangeViewConfiguration
+com.jiovan.spring.starter.localization.config.LocaleChangeResolverConfiguration
+com.jiovan.spring.starter.localization.config.LocaleChangeInterceptorConfiguration
+com.jiovan.spring.starter.localization.config.LocaleChangeThymeleafConfiguration
+com.jiovan.spring.starter.localization.config.LocaleChangeViewConfiguration

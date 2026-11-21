@@ -1,10 +1,10 @@
-# Locale Change for Spring Boot Starter
-# Copyright (c) 2022 Unikue Ltd. All rights reserved.
-# https://unikue.cn
+# Localization for Spring Boot Starter
+# Copyright (c) 2022 Jiovan Ltd. All rights reserved.
+# https://jiovan.com
 
 
-spring:
-    locale-change:
+jiovan:
+    localization:
         model-and-view:
             tag-names:
                 'en-US': 'English'
