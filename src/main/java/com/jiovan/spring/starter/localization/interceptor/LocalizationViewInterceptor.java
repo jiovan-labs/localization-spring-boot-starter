@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jiovan.plexus.common.toolkit.util.MapPlainWraps;
 import com.jiovan.plexus.spring.toolkit.util.MessageSourceWraps;
 import com.jiovan.plexus.spring.toolkit.util.WebUtilsWraps;
-import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
+import com.jiovan.spring.starter.localization.property.LocalizationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -39,15 +39,15 @@ import lombok.Setter;
  * @author David Hsing
  */
 @RequiredArgsConstructor
-public class LocaleChangeViewInterceptor implements HandlerInterceptor, MessageSourceAware {
-    private final LocaleChangeProperties properties;
+public class LocalizationViewInterceptor implements HandlerInterceptor, MessageSourceAware {
+    private final LocalizationProperties properties;
 
     @Setter
     protected MessageSource messageSource;
 
     @Override
     public void postHandle(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler, @Nullable ModelAndView view) {
-        LocaleChangeProperties.ModelAndView props = properties.getModelAndView();
+        LocalizationProperties.ModelAndView props = properties.getModelAndView();
         if (WebUtilsWraps.isCanonicalModelView(view) && StringUtils.isNotBlank(props.getViewAttribute()) && !CollectionUtils.isEmpty(props.getTagNames())) {
             if (BooleanUtils.isNotTrue(props.getTagMultilingual())) {
                 view.addObject(props.getViewAttribute(), props.getTagNames());

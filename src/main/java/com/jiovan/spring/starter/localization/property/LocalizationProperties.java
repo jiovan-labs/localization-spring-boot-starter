@@ -30,7 +30,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import com.jiovan.plexus.common.toolkit.constant.StringVariantConst;
 import com.jiovan.plexus.spring.toolkit.constant.AntPathConst;
 import com.jiovan.plexus.spring.toolkit.constant.SpringAttributeConst;
-import com.jiovan.spring.starter.localization.config.LocaleChangeViewConfiguration;
+import com.jiovan.spring.starter.localization.config.LocalizationViewConfiguration;
 import com.jiovan.spring.starter.localization.enumeration.LocaleResolverType;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,11 +44,11 @@ import lombok.ToString;
  *
  * @see "https://www.techonthenet.com/js/language_tags.php"
  */
-@ConfigurationProperties(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX)
+@ConfigurationProperties(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX)
 @Getter
 @Setter
 @ToString
-public class LocaleChangeProperties implements Serializable {
+public class LocalizationProperties implements Serializable {
     /**
      * Indicates whether to enable this starter or not
      * <p>
@@ -100,7 +100,7 @@ public class LocaleChangeProperties implements Serializable {
      * @author David Hsing
      *
      * @see org.springframework.web.servlet.ModelAndView
-     * @see com.jiovan.spring.starter.localization.interceptor.LocaleChangeViewInterceptor
+     * @see com.jiovan.spring.starter.localization.interceptor.LocalizationViewInterceptor
      */
     @Getter
     @Setter

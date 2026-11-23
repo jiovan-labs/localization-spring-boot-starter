@@ -34,7 +34,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.jiovan.plexus.spring.toolkit.util.AntPathWraps;
 import com.jiovan.plexus.spring.toolkit.util.UriUtilsWraps;
 import com.jiovan.plexus.spring.toolkit.util.WebUtilsWraps;
-import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
+import com.jiovan.spring.starter.localization.property.LocalizationProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -55,7 +55,7 @@ import lombok.Setter;
 @Setter
 @SuppressWarnings("unused")
 public class CookieLocaleRequestContextFilter extends OrderedRequestContextFilter {
-    private final LocaleChangeProperties properties;
+    private final LocalizationProperties properties;
     private String cookieName;
     private boolean threadLocaleInheritable;
 
@@ -80,7 +80,7 @@ public class CookieLocaleRequestContextFilter extends OrderedRequestContextFilte
 
     @Override
     protected boolean shouldNotFilter(@Nonnull HttpServletRequest request) throws ServletException {
-        LocaleChangeProperties.CookieLocaleFilter props = properties.getCookieLocaleFilter();
+        LocalizationProperties.CookieLocaleFilter props = properties.getCookieLocaleFilter();
         if (!CollectionUtils.isEmpty(props.getExcludePaths())) {
             String servletPath = UriUtilsWraps.getServletPath(request);
             return AntPathWraps.matchAnyPatterns(servletPath, props.getExcludePaths());

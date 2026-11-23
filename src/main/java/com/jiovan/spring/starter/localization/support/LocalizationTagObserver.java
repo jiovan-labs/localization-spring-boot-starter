@@ -21,14 +21,14 @@ import java.util.Collection;
 import java.util.Locale;
 import jakarta.annotation.Nullable;
 import com.jiovan.plexus.common.toolkit.util.LocalePlainWraps;
-import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
+import com.jiovan.spring.starter.localization.property.LocalizationProperties;
 import lombok.RequiredArgsConstructor;
 
 
 @RequiredArgsConstructor
 @SuppressWarnings("unused")
-public class LocaleChangeTagObserver {
-    private final LocaleChangeProperties properties;
+public class LocalizationTagObserver {
+    private final LocalizationProperties properties;
 
     /**
      * Returns whether the configured tag names contain the given language tag

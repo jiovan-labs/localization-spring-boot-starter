@@ -21,7 +21,7 @@ import jakarta.annotation.Nonnull;
 import org.thymeleaf.dialect.AbstractDialect;
 import org.thymeleaf.dialect.IExpressionObjectDialect;
 import org.thymeleaf.expression.IExpressionObjectFactory;
-import com.jiovan.spring.starter.localization.factory.LocaleChangeExpressionFactory;
+import com.jiovan.spring.starter.localization.factory.LocalizationExpressionFactory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,15 +34,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @SuppressWarnings("unused")
-public class LocaleChangeThymeleafDialect extends AbstractDialect implements IExpressionObjectDialect {
-    private static final String DIALECT_NAME = "Multilingual";    // $NON-NLS-1$
-    private LocaleChangeExpressionFactory expressionFactory;
+public class LocalizationThymeleafDialect extends AbstractDialect implements IExpressionObjectDialect {
+    private static final String DIALECT_NAME = "Localization";    // $NON-NLS-1$
+    private LocalizationExpressionFactory expressionFactory;
 
-    public LocaleChangeThymeleafDialect() {
+    public LocalizationThymeleafDialect() {
         super(DIALECT_NAME);
     }
 
-    public LocaleChangeThymeleafDialect(@Nonnull LocaleChangeExpressionFactory factory) {
+    public LocalizationThymeleafDialect(@Nonnull LocalizationExpressionFactory factory) {
         super(DIALECT_NAME);
         expressionFactory = factory;
     }

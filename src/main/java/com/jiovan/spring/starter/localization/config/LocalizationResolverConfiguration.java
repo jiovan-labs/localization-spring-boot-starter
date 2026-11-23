@@ -46,7 +46,7 @@ import com.jiovan.plexus.common.toolkit.util.MapPlainWraps;
 import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
 import com.jiovan.plexus.spring.toolkit.constant.SpringBeanConst;
 import com.jiovan.spring.starter.localization.filter.CookieLocaleRequestContextFilter;
-import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
+import com.jiovan.spring.starter.localization.property.LocalizationProperties;
 import com.jiovan.spring.starter.localization.resolver.CookieLocaleContextResolver;
 
 
@@ -56,21 +56,21 @@ import com.jiovan.spring.starter.localization.resolver.CookieLocaleContextResolv
  * @author David Hsing
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnBooleanProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "enabled", matchIfMissing = true)
+@ConditionalOnBooleanProperty(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX, name = "enabled", matchIfMissing = true)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @AutoConfigureAfter(value = DispatcherServletAutoConfiguration.class)
 @AutoConfigureBefore(value = WebMvcAutoConfiguration.class)
 @AutoConfigureOrder(value = Ordered.HIGHEST_PRECEDENCE + 8)
-@Import(value = {LocaleChangeResolverConfiguration.Entry.class, LocaleChangeResolverConfiguration.Cookie.class, LocaleChangeResolverConfiguration.Session.class, LocaleChangeResolverConfiguration.Fixed.class})
-public class LocaleChangeResolverConfiguration {
+@Import(value = {LocalizationResolverConfiguration.Entry.class, LocalizationResolverConfiguration.Cookie.class, LocalizationResolverConfiguration.Session.class, LocalizationResolverConfiguration.Fixed.class})
+public class LocalizationResolverConfiguration {
     @Order(value = 0)
-    @EnableConfigurationProperties(value = LocaleChangeProperties.class)
+    @EnableConfigurationProperties(value = LocalizationProperties.class)
     static class Entry {
     }
 
 
     @Order(value = 1)
-    @ConditionalOnProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "cookie", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "cookie", matchIfMissing = true)
     static class Cookie {
         /**
          * Returns a {@link org.springframework.boot.web.servlet.FilterRegistrationBean} that registers a cookie-aware request context filter
@@ -84,10 +84,10 @@ public class LocaleChangeResolverConfiguration {
         @Bean
         @ConditionalOnMissingBean(name = SpringBeanConst.REQUEST_CONTEXT_FILTER)
         @SuppressWarnings("JavadocReference")
-        public FilterRegistrationBean<RequestContextFilter> requestContextFilterRegistration(@Nonnull LocaleChangeProperties properties) {
+        public FilterRegistrationBean<RequestContextFilter> requestContextFilterRegistration(@Nonnull LocalizationProperties properties) {
             CookieLocaleRequestContextFilter filter = new CookieLocaleRequestContextFilter(properties);
-            LocaleChangeProperties.CookieLocaleFilter filterProps = properties.getCookieLocaleFilter();
-            LocaleChangeProperties.CookieLocaleResolver resolverProps = properties.getCookieLocaleResolver();
+            LocalizationProperties.CookieLocaleFilter filterProps = properties.getCookieLocaleFilter();
+            LocalizationProperties.CookieLocaleResolver resolverProps = properties.getCookieLocaleResolver();
             filter.setThreadLocaleInheritable(BooleanUtils.isTrue(filterProps.getThreadInheritable()));
             StringUtilsWraps.ifNotBlank(resolverProps.getCookieName(), filter::setCookieName);
             FilterRegistrationBean<RequestContextFilter> result = new FilterRegistrationBean<>(filter);
@@ -108,12 +108,12 @@ public class LocaleChangeResolverConfiguration {
          * @see org.springframework.web.servlet.i18n.CookieLocaleResolver
          */
         @Bean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
-        @ConditionalOnProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX + ".cookie-locale-resolver", name = "cookie-name")
+        @ConditionalOnProperty(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX + ".cookie-locale-resolver", name = "cookie-name")
         @ConditionalOnMissingBean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
-        public LocaleContextResolver localeContextResolver(@Nonnull LocaleChangeProperties properties) {
+        public LocaleContextResolver localeContextResolver(@Nonnull LocalizationProperties properties) {
             CookieLocaleContextResolver resolver = new CookieLocaleContextResolver(properties.getCookieLocaleResolver().getCookieName());
             resolver.setParamName(properties.getLocaleInterceptor().getParamName());
-            LocaleChangeProperties.CookieLocaleResolver props = properties.getCookieLocaleResolver();
+            LocalizationProperties.CookieLocaleResolver props = properties.getCookieLocaleResolver();
             StringUtilsWraps.ifNotBlank(props.getCookiePath(), resolver::setCookiePath);
             StringUtilsWraps.ifNotBlank(props.getCookieDomain(), resolver::setCookieDomain);
             Optional.ofNullable(props.getMaxAge()).ifPresent(resolver::setCookieMaxAge);
@@ -128,7 +128,7 @@ public class LocaleChangeResolverConfiguration {
 
 
     @Order(value = 2)
-    @ConditionalOnProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "session")
+    @ConditionalOnProperty(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "session")
     static class Session {
         /**
          * Returns a session-based {@link org.springframework.web.servlet.LocaleContextResolver} configured from the given properties
@@ -141,9 +141,9 @@ public class LocaleChangeResolverConfiguration {
          */
         @Bean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
         @ConditionalOnMissingBean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
-        public LocaleContextResolver localeContextResolver(@Nonnull LocaleChangeProperties properties) {
+        public LocaleContextResolver localeContextResolver(@Nonnull LocalizationProperties properties) {
             SessionLocaleResolver resolver = new SessionLocaleResolver();
-            LocaleChangeProperties.SessionLocaleResolver props = properties.getSessionLocaleResolver();
+            LocalizationProperties.SessionLocaleResolver props = properties.getSessionLocaleResolver();
             StringUtilsWraps.ifNotBlank(props.getSessionName(), resolver::setLocaleAttributeName);
             StringUtilsWraps.ifNotBlank(props.getTimezoneName(), resolver::setTimeZoneAttributeName);
             Optional.ofNullable(props.getDefaultLocale()).ifPresent(resolver::setDefaultLocale);
@@ -154,7 +154,7 @@ public class LocaleChangeResolverConfiguration {
 
 
     @Order(value = 3)
-    @ConditionalOnProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "fixed")
+    @ConditionalOnProperty(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX, name = "locale-resolver-type", havingValue = "fixed")
     static class Fixed {
         /**
          * Returns a fixed {@link org.springframework.web.servlet.LocaleContextResolver} configured from the given properties
@@ -167,9 +167,9 @@ public class LocaleChangeResolverConfiguration {
          */
         @Bean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
         @ConditionalOnMissingBean(name = DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
-        public LocaleContextResolver localeContextResolver(@Nonnull LocaleChangeProperties properties) {
+        public LocaleContextResolver localeContextResolver(@Nonnull LocalizationProperties properties) {
             FixedLocaleResolver resolver = new FixedLocaleResolver();
-            LocaleChangeProperties.SessionLocaleResolver props = properties.getSessionLocaleResolver();
+            LocalizationProperties.SessionLocaleResolver props = properties.getSessionLocaleResolver();
             Optional.ofNullable(props.getDefaultLocale()).ifPresent(resolver::setDefaultLocale);
             Optional.ofNullable(props.getDefaultTimeZone()).ifPresent(resolver::setDefaultTimeZone);
             return resolver;

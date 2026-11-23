@@ -29,10 +29,10 @@ import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.Thymeleaf;
 import com.jiovan.plexus.spring.condition.annotation.ConditionalOnAllBooleanProperties;
-import com.jiovan.spring.starter.localization.dialect.LocaleChangeThymeleafDialect;
-import com.jiovan.spring.starter.localization.factory.LocaleChangeExpressionFactory;
-import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
-import com.jiovan.spring.starter.localization.support.LocaleChangeTagObserver;
+import com.jiovan.spring.starter.localization.dialect.LocalizationThymeleafDialect;
+import com.jiovan.spring.starter.localization.factory.LocalizationExpressionFactory;
+import com.jiovan.spring.starter.localization.property.LocalizationProperties;
+import com.jiovan.spring.starter.localization.support.LocalizationTagObserver;
 import lombok.RequiredArgsConstructor;
 
 
@@ -43,22 +43,22 @@ import lombok.RequiredArgsConstructor;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnAllBooleanProperties(value = {
-    @ConditionalOnBooleanProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "enabled", matchIfMissing = true),
-    @ConditionalOnBooleanProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "thymeleaf-dialect", matchIfMissing = true)
+    @ConditionalOnBooleanProperty(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX, name = "enabled", matchIfMissing = true),
+    @ConditionalOnBooleanProperty(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX, name = "thymeleaf-dialect", matchIfMissing = true)
 })
 @ConditionalOnClass(value = Thymeleaf.class)
-@EnableConfigurationProperties(value = LocaleChangeProperties.class)
+@EnableConfigurationProperties(value = LocalizationProperties.class)
 @RequiredArgsConstructor
 @AutoConfigureAfter(value = ThymeleafAutoConfiguration.class)
-public class LocaleChangeThymeleafConfiguration implements BeanPostProcessor {
-    private final LocaleChangeProperties properties;
+public class LocalizationThymeleafConfiguration implements BeanPostProcessor {
+    private final LocalizationProperties properties;
 
     @Override
     public Object postProcessAfterInitialization(@Nonnull Object bean, @Nonnull String beanName) throws BeansException {
         if (bean instanceof TemplateEngine instance) {
-            LocaleChangeTagObserver observer = new LocaleChangeTagObserver(properties);
-            LocaleChangeExpressionFactory factory = new LocaleChangeExpressionFactory(observer);
-            LocaleChangeThymeleafDialect dialect = new LocaleChangeThymeleafDialect(factory);
+            LocalizationTagObserver observer = new LocalizationTagObserver(properties);
+            LocalizationExpressionFactory factory = new LocalizationExpressionFactory(observer);
+            LocalizationThymeleafDialect dialect = new LocalizationThymeleafDialect(factory);
             instance.addDialect(dialect);
         }
         return bean;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Jiovan Ltd. All rights reserved.
+ * Copyright (c) 2022 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package com.jiovan.spring.starter.localization.config;
 
 import java.util.Optional;
 import jakarta.annotation.Nonnull;
-import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -30,55 +29,44 @@ import org.springframework.util.Assert;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import com.jiovan.plexus.common.toolkit.constant.AssertMessageConst;
 import com.jiovan.plexus.common.toolkit.util.CollectionPlainWraps;
-import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
-import com.jiovan.spring.starter.localization.property.LocaleChangeProperties;
+import com.jiovan.spring.starter.localization.interceptor.LocalizationViewInterceptor;
+import com.jiovan.spring.starter.localization.property.LocalizationProperties;
 import lombok.RequiredArgsConstructor;
 
 
 /**
- * Configuration of {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} for localization
+ * Configuration of view interceptor for localization
  *
  * @author David Hsing
  */
 @Configuration
-@ConditionalOnBooleanProperty(prefix = LocaleChangeViewConfiguration.PROPERTIES_PREFIX, name = "enabled", matchIfMissing = true)
+@ConditionalOnBooleanProperty(prefix = LocalizationViewConfiguration.PROPERTIES_PREFIX, name = "enabled", matchIfMissing = true)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@EnableConfigurationProperties(value = LocaleChangeProperties.class)
+@EnableConfigurationProperties(value = LocalizationProperties.class)
 @RequiredArgsConstructor
-public class LocaleChangeInterceptorConfiguration implements WebMvcConfigurer {
-    private final LocaleChangeProperties properties;
+public class LocalizationViewConfiguration implements WebMvcConfigurer {
+    public static final String PROPERTIES_PREFIX = "jiovan.localization";    // $NON-NLS-1$
+    public static final String VIEW_INTERCEPTOR = "localizationViewInterceptor";    // $NON-NLS-1$
+    private final LocalizationProperties properties;
 
     /**
-     * Returns a {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} configured from the locale interceptor properties
+     * Returns the {@link com.jiovan.spring.starter.localization.interceptor.LocalizationViewInterceptor} that applies the locale to the view
      *
-     * @return the configured locale change interceptor
-     *
-     * Usage:
-     * <pre><code>
-     *     &lt;a href="?lang=en-US"&gt;English&lt;/a&gt;
-     *     &lt;a href="?lang=en_US"&gt;English&lt;/a&gt;
-     * </code></pre>
-     *
-     * @see "http://guanxi.iteye.com/blog/2304607"
+     * @return a new {@link com.jiovan.spring.starter.localization.interceptor.LocalizationViewInterceptor} configured with the localization properties
      */
-    @Bean
+    @Bean(name = VIEW_INTERCEPTOR)
     @ConditionalOnMissingBean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        LocaleChangeProperties.LocaleInterceptor props = properties.getLocaleInterceptor();
-        StringUtilsWraps.ifNotBlank(props.getParamName(), interceptor::setParamName);
-        interceptor.setIgnoreInvalidLocale(BooleanUtils.isTrue(props.getIgnoreInvalidLocale()));
-        return interceptor;
+    public LocalizationViewInterceptor viewInterceptor() {
+        return new LocalizationViewInterceptor(properties);
     }
 
     @Override
     public void addInterceptors(@Nonnull InterceptorRegistry registry) {
-        LocaleChangeProperties.LocaleInterceptor props = properties.getLocaleInterceptor();
+        LocalizationProperties.ModelAndView props = properties.getModelAndView();
         Assert.notEmpty(props.getInterceptPaths(), AssertMessageConst.NOT_EMPTY);
-        InterceptorRegistration registration = registry.addInterceptor(localeChangeInterceptor()).addPathPatterns(props.getInterceptPaths());
+        InterceptorRegistration registration = registry.addInterceptor(viewInterceptor()).addPathPatterns(props.getInterceptPaths());
         Optional.ofNullable(props.getInterceptorOrder()).ifPresent(registration::order);
         CollectionPlainWraps.ifNotEmpty(props.getExcludePaths(), element -> registration.excludePathPatterns(element));
     }

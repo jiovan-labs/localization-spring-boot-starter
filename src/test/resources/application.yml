@@ -1,0 +1,17 @@
+# Localization for Spring Boot Starter
+# Copyright (c) 2022 Jiovan Ltd. All rights reserved.
+# https://jiovan.com
+
+spring:
+    thymeleaf:
+        check-template-location: false
+
+jiovan:
+    localization:
+        locale-resolver-type: cookie
+        locale-interceptor:
+            param-name: 'lang'
+        cookie-locale-resolver:
+            cookie-name: 'locale'
+            default-locale: 'en-US'
+            http-only: true

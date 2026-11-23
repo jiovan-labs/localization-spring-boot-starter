@@ -72,6 +72,36 @@ Under the `body` segment:
 </ul>
 ```
 
+## Locale Resolution: This Starter vs. Spring Boot Defaults
+
+Spring Boot resolves the locale only through `spring.web.locale` / `spring.web.locale-resolver`, and offers just two modes:
+
+- `ACCEPT_HEADER` (default): `AcceptHeaderLocaleResolver` reads the browser's `Accept-Language` header. There is no way to switch languages from a page link or a URL parameter.
+- `FIXED`: `FixedLocaleResolver` always uses the configured `spring.web.locale`.
+
+That is why clicking a language link does not work out of the box. This starter fills the gap with a **URL parameter based** mechanism (`?lang=zh-CN` by default) and persists the choice in a cookie or session:
+
+|                       | Spring Boot defaults (`spring.web.*`)                | This starter (`jiovan.localization.*`)             |
+|-----------------------|------------------------------------------------------|----------------------------------------------------|
+| LocaleResolver        | `AcceptHeaderLocaleResolver` / `FixedLocaleResolver` | `CookieLocaleContextResolver` (or Session / Fixed) |
+| How to switch         | `Accept-Language` header or a fixed locale           | `?lang=xx` URL parameter                           |
+| Remembers the choice  | No, re-reads the header every request                | Yes, persisted in a cookie or session              |
+| URL parameter support | No                                                   | Yes                                                |
+
+How it works:
+
+1. `LocalizationResolverConfiguration` is ordered **before** `WebMvcAutoConfiguration` and registers its own bean named `localeResolver`. Spring Boot's `localeResolver()` is annotated with `@ConditionalOnMissingBean(name = "localeResolver")`, so it backs off.
+2. `CookieLocaleContextResolver` reads the `lang` parameter on every call, with priority **URL parameter > cookie > default locale**.
+3. `LocaleChangeInterceptor` writes the selected locale into the cookie, so later requests without the parameter still keep the language.
+4. `CookieLocaleRequestContextFilter` exposes the locale through `LocaleContextHolder` early in the filter chain, for code outside the `DispatcherServlet`.
+
+Practical consequences:
+
+- While this starter is enabled, `spring.web.locale` / `spring.web.locale-resolver` no longer affect MVC locale resolution because the `localeResolver` bean has been replaced. Configure the fallback locale with `jiovan.localization.cookie-locale-resolver.default-locale` (or `session-locale-resolver.default-locale`) instead.
+- Setting `jiovan.localization.enabled=false` disables the starter entirely; Spring Boot then falls back to `AcceptHeaderLocaleResolver` and `?lang=xx` has no effect.
+- URL switching works with `locale-resolver-type=cookie` (default) and `session`. With `fixed` the URL parameter is ignored and the locale is fixed.
+- See `src/test` for runnable tests that demonstrate both the URL-parameter behaviour and the Spring Boot default behaviour.
+
 ## Document
 
 - Github: https://github.com/jiovan-labs/localization-spring-boot-starter

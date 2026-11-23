@@ -2,7 +2,7 @@
 # Copyright (c) 2022 Jiovan Ltd. All rights reserved.
 # https://jiovan.com
 
-com.jiovan.spring.starter.localization.config.LocaleChangeResolverConfiguration
-com.jiovan.spring.starter.localization.config.LocaleChangeInterceptorConfiguration
-com.jiovan.spring.starter.localization.config.LocaleChangeThymeleafConfiguration
-com.jiovan.spring.starter.localization.config.LocaleChangeViewConfiguration
+com.jiovan.spring.starter.localization.config.LocalizationResolverConfiguration
+com.jiovan.spring.starter.localization.config.LocalizationInterceptorConfiguration
+com.jiovan.spring.starter.localization.config.LocalizationThymeleafConfiguration
+com.jiovan.spring.starter.localization.config.LocalizationViewConfiguration

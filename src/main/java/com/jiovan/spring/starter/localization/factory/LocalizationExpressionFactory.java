@@ -23,7 +23,7 @@ import jakarta.annotation.Nullable;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.expression.IExpressionObjectFactory;
 import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
-import com.jiovan.spring.starter.localization.support.LocaleChangeTagObserver;
+import com.jiovan.spring.starter.localization.support.LocalizationTagObserver;
 
 
 /**
@@ -31,7 +31,7 @@ import com.jiovan.spring.starter.localization.support.LocaleChangeTagObserver;
  *
  * @author David Hsing
  */
-public record LocaleChangeExpressionFactory(LocaleChangeTagObserver observer) implements IExpressionObjectFactory {
+public record LocalizationExpressionFactory(LocalizationTagObserver observer) implements IExpressionObjectFactory {
     private static final String EXPRESSION_NAME = "localeChange";    // $NON-NLS-1$
 
     @Override
